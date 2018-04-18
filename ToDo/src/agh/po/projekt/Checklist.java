@@ -17,54 +17,54 @@ import java.util.Scanner;
     void changeToDone();
  */
 
-public class Checklist implements Selectable,Serializable{
+public class Checklist implements Selectable, Serializable {
     private String name;
     private List<String> list;
     private List<Boolean> done;
     private transient Scanner scanner;
 
-    public Checklist(String name){
-        this.scanner=new Scanner(System.in);
-        this.name=name;
+    public Checklist(String name) {
+        this.scanner = new Scanner(System.in);
+        this.name = name;
         this.list = new ArrayList<>();
         this.done = new ArrayList<>();
         addTasks();
     }
 
-    public void initScanner(){
-        this.scanner=new Scanner(System.in);
+    public void initScanner() {
+        this.scanner = new Scanner(System.in);
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public boolean isDone(int i){
+    public boolean isDone(int i) {
         return this.done.get(i);
     }
 
-    public void addTasks(){
+    public void addTasks() {
         initScanner();
         System.out.println("\nPodaj zadania do wykonania. Każde zatwierdź klawiszem ENTER.\n2xENTER aby zapisać. ");
-        String task=scanner.nextLine();
-        while (!task.isEmpty()){
+        String task = scanner.nextLine();
+        while (!task.isEmpty()) {
             list.add(task);
             done.add(false);
-            task=scanner.nextLine();
+            task = scanner.nextLine();
         }
     }
 
-    public void show()  {
+    public void show() {
         initScanner();
         System.out.println("\nA-Dodaj zadania do listy    E-Oznacz wybrane zadania jako wykonane    B-Powrót\n");
         System.out.println(this.name);
-        for (int i=0;i<list.size();i++){
-            if (!isDone(i)) System.out.printf("%13s","Niewykonane  ");
-            else System.out.printf("%13s","Wykonane     ");
-            System.out.println((i+1)+". "+ list.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            if (!isDone(i)) System.out.printf("%13s", "Niewykonane  ");
+            else System.out.printf("%13s", "Wykonane     ");
+            System.out.println((i + 1) + ". " + list.get(i));
         }
-        char c=selectOption();
-        switch(c){
+        char c = selectOption();
+        switch (c) {
             case 'A':
             case 'a':
                 this.addTasks();
@@ -82,18 +82,18 @@ public class Checklist implements Selectable,Serializable{
         }
     }
 
-    public void changeToDone()  {
+    public void changeToDone() {
         initScanner();
         System.out.println("\nPodaj numery, które chcesz oznaczyć jako wykonane. Każdy zatwierdź klawiszem ENTER.\n2xENTER aby zapisać.");
-        String no=scanner.nextLine();
-        while(!no.isEmpty()){
+        String no = scanner.nextLine();
+        while (!no.isEmpty()) {
             try {
                 int i = Integer.parseInt(no);
                 done.set(i - 1, true);
                 no = scanner.nextLine();
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println("Brak zadania o podanym numerze.");
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Podany znak nie jest liczbą.");
             }
         }
